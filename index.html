@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,36 +11,53 @@
         /* Custom styles for the Inter font and overall look */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light gray background */
+            background-color: #fdf6e3;
+            /* Warm off-white/cream background for Vedic vibes */
             display: flex;
-            flex-direction: column; /* Changed to column to stack content and footer */
+            flex-direction: column;
+            /* Changed to column to stack content and footer */
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Full viewport height */
+            min-height: 100vh;
+            /* Full viewport height */
             margin: 0;
         }
+
         .container {
-            background-color: #ffffff; /* White background for content */
-            padding: 2.5rem; /* Large padding */
-            border-radius: 1rem; /* More rounded corners */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            background-color: #f9ecd2;
+            /* Light cream background for content, matches Vedic palette */
+            padding: 2.5rem;
+            /* Large padding */
+            border-radius: 1rem;
+            /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            /* Soft shadow */
             text-align: center;
-            max-width: 90%; /* Responsive max width */
-            width: 600px; /* Max width for larger screens */
-            margin-bottom: 2rem; /* Space between content and footer */
+            max-width: 90%;
+            /* Responsive max width */
+            width: 600px;
+            /* Max width for larger screens */
+            margin-bottom: 2rem;
+            /* Space between content and footer */
         }
+
         h1 {
-            color: #1a202c; /* Dark text for heading */
+            color: #1a202c;
+            /* Dark text for heading */
             margin-bottom: 1rem;
         }
+
         p {
-            color: #4a5568; /* Slightly lighter text for paragraph */
+            color: #4a5568;
+            /* Slightly lighter text for paragraph */
             line-height: 1.6;
             margin-bottom: 1.5rem;
         }
+
         .button {
             display: inline-block;
-            background-color: #4299e1; /* Blue button */
+            background-color: #4299e1;
+            /* Blue button */
             color: #ffffff;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
@@ -47,36 +65,59 @@
             font-weight: 600;
             transition: background-color 0.3s ease;
         }
+
         .button:hover {
-            background-color: #3182ce; /* Darker blue on hover */
+            background-color: #3182ce;
+            /* Darker blue on hover */
         }
+
         /* Footer specific styles */
         footer {
-            background-color: #2d3748; /* Dark gray for footer */
-            color: #e2e8f0; /* Light text color */
+            background-color: #2d3748;
+            /* Dark gray for footer */
+            color: #e2e8f0;
+            /* Light text color */
             width: 100%;
             padding: 2rem 1rem;
             text-align: center;
             border-top-left-radius: 0.5rem;
             border-top-right-radius: 0.5rem;
         }
+
         footer a {
-            color: #63b3ed; /* Light blue for links */
+            color: #63b3ed;
+            /* Light blue for links */
             text-decoration: none;
             transition: color 0.3s ease;
         }
+
         footer a:hover {
-            color: #90cdf4; /* Lighter blue on hover */
+            color: #90cdf4;
+            /* Lighter blue on hover */
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
+    <!-- Navbar -->
+    <nav class="w-full shadow-md py-4 px-6 flex items-center justify-between mb-6"
+        style="background-color: #2d3748; color: #e2e8f0; border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0.5rem;">
+        <div class="flex items-center">
+            <!-- Logo (replace src with your logo if available) -->
+            <img src="logo.png" alt="Divtatva Logo" class="h-10 w-10 mr-3" onerror="this.style.display='none'">
+            <span class="text-2xl font-bold"
+                style="color: #e2e8f0; font-family: 'Dancing Script', cursive;">Divtatva</span>
+        </div>
+        <!-- Add nav links here if needed in the future -->
+    </nav>
     <div class="container">
         <h1 class="text-4xl font-bold mb-4">Welcome to Divtatva!</h1>
-        <p class="text-lg mb-6">
-            A platform that focuses on providing all the vedic needs of a person in one place.
+        <p class="text-lg mb-6" id="welcome-text">
+            Discover the essence of Vedic living—rituals, wisdom, and tradition, all in one sacred space.
         </p>
-        <p class="text-md mb-8">
+        <p class="text-xl font-semibold mb-8 mt-8" id="coming-soon-text">
             Coming soon! We are working hard to bring you the best experience possible. Stay tuned for updates.
         </p>
     </div>
@@ -90,8 +131,9 @@
             <p class="text-sm mb-2">
                 Email: <a href="mailto:developers@divtatva.com">developers@divtatva.com</a>
             </p>
-            
+
         </div>
     </footer>
 </body>
+
 </html>
