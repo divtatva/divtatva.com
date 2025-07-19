@@ -115,6 +115,7 @@
                 <div id="detailsContent" class="text-sm text-gray-700">
                     <!-- Details will be rendered here -->
                 </div>
+                <div id="agendaView" class="mt-8"></div>
             </div>
             <!-- Right: Calendar Panel -->
             <div class="w-full md:w-1/3 p-2 sm:p-4 flex flex-col items-center">
@@ -349,8 +350,69 @@
                             </div>
                         </div>
                     </div>
+                    
                 `;
+                renderAgendaView(entry);
             }
+
+            // Agenda/Timeline view for events
+            function renderAgendaView(entry) {
+                const agendaDiv = document.getElementById('agendaView');
+                if (!agendaDiv) return;
+                // Collect all events with start/end times
+                const events = [];
+                if (entry.sunrise && entry.sunset) {
+                    events.push({ name: 'Sunrise', color: '#fbbf24', start: entry.sunrise, end: entry.sunrise });
+                    events.push({ name: 'Sunset', color: '#f59e42', start: entry.sunset, end: entry.sunset });
+                }
+                if (entry.moonrise) {
+                    events.push({ name: 'Moonrise', color: '#a78bfa', start: entry.moonrise, end: entry.moonrise });
+                }
+                if (entry.moonset) {
+                    events.push({ name: 'Moonset', color: '#6366f1', start: entry.moonset, end: entry.moonset });
+                }
+                if (entry.muhurta) {
+                    if (entry.muhurta.rahu_kaalam) {
+                        events.push({ name: 'Rahu', color: '#f472b6', start: entry.muhurta.rahu_kaalam.start, end: entry.muhurta.rahu_kaalam.end });
+                    }
+                    if (entry.muhurta.gulika_kaalam) {
+                        events.push({ name: 'Gulika', color: '#f472b6', start: entry.muhurta.gulika_kaalam.start, end: entry.muhurta.gulika_kaalam.end });
+                    }
+                    if (entry.muhurta.yamaganda_kaalam) {
+                        events.push({ name: 'YamaGanda', color: '#f472b6', start: entry.muhurta.yamaganda_kaalam.start, end: entry.muhurta.yamaganda_kaalam.end });
+                    }
+                    if (entry.muhurta.abhijit_muhurta) {
+                        events.push({ name: 'Abhijit', color: '#6ee7b7', start: entry.muhurta.abhijit_muhurta.start, end: entry.muhurta.abhijit_muhurta.end });
+                    }
+                }
+                // Vertical agenda view
+                // Sort events by start time
+                const sortedEvents = events.map(ev => {
+                    let start = new Date(ev.start);
+                    let end = new Date(ev.end);
+                    return { ...ev, start, end };
+                }).filter(ev => !isNaN(ev.start.getTime())).sort((a, b) => a.start - b.start);
+
+                let agendaHTML = `<div class='mb-2 text-xs text-gray-500'>Agenda View</div>`;
+                agendaHTML += `<div class='flex flex-col gap-2'>`;
+                sortedEvents.forEach(ev => {
+                    const isPoint = ev.start.getTime() === ev.end.getTime();
+                    agendaHTML += `
+                        <div class='flex items-center gap-3 bg-gray-50 rounded-lg px-3 py-2 shadow-sm'>
+                            <div class='flex flex-col items-center'>
+                                <div style='width:10px;height:${isPoint ? 10 : 24}px;background:${ev.color};border-radius:6px;'></div>
+                            </div>
+                            <div class='flex-1'>
+                                <div class='text-xs text-gray-500'>${ev.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}${!isPoint ? ' - ' + ev.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</div>
+                                <div class='text-sm font-semibold text-gray-900'>${ev.name}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                agendaHTML += `</div>`;
+                agendaDiv.innerHTML = agendaHTML;
+            }
+            
 
             prevMonth.addEventListener('click', () => {
                 currentDate.setMonth(currentDate.getMonth() - 1);
