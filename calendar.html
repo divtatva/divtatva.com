@@ -294,14 +294,22 @@
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-4 mb-4">
-                            <!--div>
+                            <div>
                                 <div class="text-xs text-gray-400">Sunrise</div>
                                 <div class="font-medium text-gray-700">${formatTime(entry.sunrise)}</div>
                             </div>
                             <div>
                                 <div class="text-xs text-gray-400">Sunset</div>
                                 <div class="font-medium text-gray-700">${formatTime(entry.sunset)}</div>
-                            </div-->
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-400">Moonrise</div>
+                                <div class="font-medium text-gray-700">${formatTime(entry.moonrise)}</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-400">Moonset</div>
+                                <div class="font-medium text-gray-700">${formatTime(entry.moonset)}</div>
+                            </div>
                             <div>
                                 <div class="text-xs text-gray-400">Ritu</div>
                                 <div class="font-medium text-gray-700">${entry.ritu}</div>
@@ -327,6 +335,17 @@
                             <div class="text-xs text-gray-400 mb-1">Hindu Maasa</div>
                             <div class="flex flex-wrap gap-2">
                                 ${entry.hindu_maasa ? `<span class='inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full'>${entry.hindu_maasa.purnimanta} / ${entry.hindu_maasa.amanta}</span>` : '<span class="text-gray-400">-</span>'}
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="text-xs text-gray-400 mb-1">Muhuratas</div>
+                            <div class="flex flex-wrap gap-2">
+                                ${entry.muhurta ? [
+                                    entry.muhurta.rahu_kaalam ? `<span class='inline-block bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded-full'>Rahu <span class='text-gray-500'>(${formatTime(entry.muhurta.rahu_kaalam.start)} - ${formatTime(entry.muhurta.rahu_kaalam.end)})</span></span>` : '',
+                                    entry.muhurta.gulika_kaalam ? `<span class='inline-block bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded-full'>Gulika <span class='text-gray-500'>(${formatTime(entry.muhurta.gulika_kaalam.start)} - ${formatTime(entry.muhurta.gulika_kaalam.end)})</span></span>` : '',                        
+                                    entry.muhurta.yamaganda_kaalam ? `<span class='inline-block bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded-full'>YamaGanda <span class='text-gray-500'>(${formatTime(entry.muhurta.yamaganda_kaalam.start)} - ${formatTime(entry.muhurta.yamaganda_kaalam.end)})</span></span>` : '',
+                                    entry.muhurta.abhijit_muhurta ? `<span class='inline-block bg-green-100 text-pink-800 text-xs px-2 py-1 rounded-full'>Abhijit <span class='text-gray-500'>(${formatTime(entry.muhurta.abhijit_muhurta.start)} - ${formatTime(entry.muhurta.abhijit_muhurta.end)})</span></span>` : ''
+                                ].filter(Boolean).join('') : '<span class="text-gray-400">-</span>'}
                             </div>
                         </div>
                     </div>
