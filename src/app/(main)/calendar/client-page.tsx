@@ -9,7 +9,7 @@ import { useMemo, useState } from "react";
 
 
 const PanchangaView = (panchaga: Record<string, Panchanga>) => {
-  const result: Record<string, { 
+  const result: Record<string, {
     date: string,
     tithi: TithiDetail[],
     nakshatra: NakshatraDetail[],
@@ -17,7 +17,7 @@ const PanchangaView = (panchaga: Record<string, Panchanga>) => {
     karana: KaranaDetail[],
     sunrise: string,
     sunset: string
- }> = {};
+  }> = {};
   Object.entries(panchaga).forEach(([dateStr, panchangaObj]) => {
     result[dateStr] = panchangaObj;
   });
@@ -25,7 +25,7 @@ const PanchangaView = (panchaga: Record<string, Panchanga>) => {
 }
 
 export default function HinduCalendarPage(initialData: Record<string, any>) {
-    
+
   const calendarData = initialData.initialData;
   const panchangaData = PanchangaView(calendarData);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -47,7 +47,7 @@ export default function HinduCalendarPage(initialData: Record<string, any>) {
     const formatted = `${yyyy}-${mm}-${dd}`;
     setSelectedDate(formatted);
   };
-  
+
   const changeMonth = (offset: number) => {
     setCurrentDate(prevDate => {
       const newDate = new Date(prevDate);
@@ -62,29 +62,45 @@ export default function HinduCalendarPage(initialData: Record<string, any>) {
       <main className="flex-grow">
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="card flex justify-between items-center mb-8">
-            <div>
-              <h1 className="font-bold text-3xl sm:text-4xl">Hindu Panchang</h1>
-              <p className="mt-1">For {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
-            </div>
-            <div className="flex items-center space-x-2">
-              <button onClick={() => changeMonth(-1)} className="btn">‹ Prev</button>
-              <button onClick={() => changeMonth(1)} className="btn">Next ›</button>
+          <div className="card flex flex-col items-center mb-8 gap-4 sm:gap-0">
+            <h1 className="font-bold text-3xl sm:text-4xl mb-2">Hindu Panchang</h1>
+            <div className="flex items-center gap-2 justify-center w-full">
+              <button
+                onClick={() => changeMonth(-1)}
+                className="inline-flex items-center justify-center rounded-full bg-blue-100 text-blue-900 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2 text-lg font-semibold transition-colors duration-200 min-w-[44px] min-h-[44px]"
+                aria-label="Previous Month"
+              >
+                <span className="sr-only">Previous</span>
+                <span aria-hidden="true">‹</span>
+                <span className="ml-2 hidden xs:inline">Prev</span>
+              </button>
+              <span className="text-lg sm:text-xl font-semibold text-gray-900 px-2 min-w-[120px] text-center">
+                {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
+              </span>
+              <button
+                onClick={() => changeMonth(1)}
+                className="inline-flex items-center justify-center rounded-full bg-blue-100 text-blue-900 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2 text-lg font-semibold transition-colors duration-200 min-w-[44px] min-h-[44px]"
+                aria-label="Next Month"
+              >
+                <span className="mr-2 hidden xs:inline">Next</span>
+                <span aria-hidden="true">›</span>
+                <span className="sr-only">Next</span>
+              </button>
             </div>
           </div>
 
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 card">
-              <CalendarView 
+              <CalendarView
                 currentDate={currentDate}
                 onDateSelect={handleDateSelect}
                 selectedDate={selectedDate}
               />
             </div>
             <div className="lg:col-span-1 card">
-              <EventDetails 
-                selectedDate={selectedDate} 
+              <EventDetails
+                selectedDate={selectedDate}
                 details={selectedDateDetails}
               />
             </div>
@@ -93,4 +109,4 @@ export default function HinduCalendarPage(initialData: Record<string, any>) {
       </main>
     </div>
   );
-}
+}``
