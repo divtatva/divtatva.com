@@ -31,7 +31,7 @@ const EventDetails = ({ selectedDate, details }: EventDetailsProps) => {
   });
 
   return (
-    <div className="card p-6 h-full">
+    <div className="card p-6">
       <h3 className="text-2xl font-bold text-orange-600 dark:text-orange-400 mb-2">
         Panchang Details
       </h3>

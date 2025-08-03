@@ -1,46 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import AgendaView from "@/components/ui/calendar/AgendaView";
 import CalendarView from "@/components/ui/calendar/CalendarView";
 import EventDetails from "@/components/ui/calendar/EventDetails";
 import { KaranaDetail, NakshatraDetail, Panchanga, TithiDetail, YogaDetail } from "@/lib/types/panchanga";
-import { formatDate } from "@/lib/utils/dateUtils";
+import { formatDate, formatTime } from "@/lib/utils/dateUtils";
 import { useMemo, useState } from "react";
 
+export default function HinduCalendarPage({ initialData }: { initialData: Record<string, any> }) {
+  const PanchangaView = (panchaga: Record<string, Panchanga>) => {
+    const result: Record<string, {
+      date: string,
+      tithi: TithiDetail[],
+      nakshatra: NakshatraDetail[],
+      yoga: YogaDetail[],
+      karana: KaranaDetail[],
+      sunrise: string,
+      sunset: string
+    }> = {};
 
-
-const PanchangaView = (panchaga: Record<string, Panchanga>) => {
-  const result: Record<string, {
-    date: string,
-    tithi: TithiDetail[],
-    nakshatra: NakshatraDetail[],
-    yoga: YogaDetail[],
-    karana: KaranaDetail[],
-    sunrise: string,
-    sunset: string
-  }> = {};
-  Object.entries(panchaga).forEach(([dateStr, panchangaObj]) => {
-    result[dateStr] = panchangaObj;
-  });
-  return result;
-}
-
-export default function HinduCalendarPage(initialData: Record<string, any>) {
-
-  const calendarData = initialData.initialData;
+    if (!panchaga) return result;
+    // Convert each panchanga entry to the desired format
+    Object.entries(panchaga).forEach(([dateStr, panchangaObj]) => {
+      result[dateStr] = panchangaObj;
+    });
+    return result;
+  }
+  const calendarData = initialData;
   const panchangaData = PanchangaView(calendarData);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(formatDate(currentDate));
+  const [view, setView] = useState<'calendar' | 'agenda'>('calendar');
 
   const selectedDateDetails = useMemo(() => {
     if (!selectedDate || !panchangaData[selectedDate]) {
       return null;
     }
-    // Assuming calendarData[selectedDate] contains the details for the selected date
     return calendarData[selectedDate] || null;
   }, [selectedDate, panchangaData]);
 
   const handleDateSelect = (date: Date) => {
-    // Format date as yyyy-mm-dd
     const yyyy = date.getFullYear();
     const mm = String(date.getMonth() + 1).padStart(2, '0');
     const dd = String(date.getDate()).padStart(2, '0');
@@ -56,9 +55,10 @@ export default function HinduCalendarPage(initialData: Record<string, any>) {
     });
   };
 
+  
+
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Main Content Area */}
       <main className="flex-grow">
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -89,24 +89,26 @@ export default function HinduCalendarPage(initialData: Record<string, any>) {
             </div>
           </div>
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content Grid - calendar smaller, event details larger */}
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             <div className="lg:col-span-2 card">
               <CalendarView
                 currentDate={currentDate}
                 onDateSelect={handleDateSelect}
                 selectedDate={selectedDate}
               />
-            </div>
-            <div className="lg:col-span-1 card">
               <EventDetails
                 selectedDate={selectedDate}
                 details={selectedDateDetails}
               />
+            </div>
+            <div className="lg:col-span-3 card flex flex-col gap-6">
+              
+                <AgendaView details={selectedDateDetails} selectedDate={selectedDate}/>
             </div>
           </div>
         </div>
       </main>
     </div>
   );
-}``
+}
